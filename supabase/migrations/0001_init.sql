@@ -208,8 +208,12 @@ create policy "articles: editores ven y administran todo" on public.articles
 create policy "social_posts_log: editores leen" on public.social_posts_log
   for select using (exists (select 1 from public.editors e where e.id = auth.uid()));
 
-create policy "editors: los propios editores se ven entre sí" on public.editors
-  for select using (exists (select 1 from public.editors e where e.id = auth.uid()));
+-- Nota: esta política NO puede volver a consultar `editors` en su USING —
+-- Postgres re-evalúa las políticas de la tabla contra sí misma en cada
+-- subconsulta, y eso produce recursión infinita (42P17). Cada editor ve
+-- únicamente su propia fila, que es lo único que necesita el CMS hoy.
+create policy "editors: pueden verse a sí mismos" on public.editors
+  for select using (id = auth.uid());
 
 -- Newsletter: alta pública, lectura solo editores
 create policy "subscribers: alta pública" on public.subscribers
