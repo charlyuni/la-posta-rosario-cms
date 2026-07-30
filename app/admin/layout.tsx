@@ -1,1 +1,37 @@
-aW1wb3J0IExpbmsgZnJvbSAibmV4dC9saW5rIjsKaW1wb3J0IHsgc2lnbk91dCB9IGZyb20gIi4vYWN0aW9ucyI7CgpleHBvcnQgY29uc3QgZHluYW1pYyA9ICJmb3JjZS1keW5hbWljIjsKCmNvbnN0IE5BViA9IFsKICB7IGhyZWY6ICIvYWRtaW4iLCBsYWJlbDogIlBhbmVsIiB9LAogIHsgaHJlZjogIi9hZG1pbi9hcnRpY3Vsb3MiLCBsYWJlbDogIk5vdGFzIiB9LAogIHsgaHJlZjogIi9hZG1pbi9mdWVudGVzIiwgbGFiZWw6ICJGdWVudGVzIiB9LAogIHsgaHJlZjogIi9hZG1pbi9jb25maWciLCBsYWJlbDogIkNvbmZpZ3VyYWNpw7NuIiB9LApdOwoKZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gQWRtaW5MYXlvdXQoeyBjaGlsZHJlbiB9OiB7IGNoaWxkcmVuOiBSZWFjdC5SZWFjdE5vZGUgfSkgewogIHJldHVybiAoCiAgICA8ZGl2IGNsYXNzTmFtZT0ibXgtYXV0byBmbGV4IG1pbi1oLXNjcmVlbiBtYXgtdy01eGwgZmxleC1jb2wgcHgtNiBweS02Ij4KICAgICAgPGhlYWRlciBjbGFzc05hbWU9Im1iLTggZmxleCBpdGVtcy1jZW50ZXIganVzdGlmeS1iZXR3ZWVuIGJvcmRlci1iLTIgYm9yZGVyLXRpbnRhIHBiLTQiPgogICAgICAgIDxkaXY+CiAgICAgICAgICA8cCBjbGFzc05hbWU9ImZvbnQtbW9ubyB0ZXh0LXhzIHVwcGVyY2FzZSB0cmFja2luZy13aWRlc3QgdGV4dC1hY2VudG8yIj5SZWRhY2Npw7NuPC9wPgogICAgICAgICAgPGgxIGNsYXNzTmFtZT0iZm9udC1zZXJpZiB0ZXh0LTJ4bCBmb250LWJvbGQiPkxhIFBvc3RhIFJvc2FyaW88L2gxPgogICAgICAgIDwvZGl2PgogICAgICAgIDxuYXYgY2xhc3NOYW1lPSJmbGV4IGl0ZW1zLWNlbnRlciBnYXAtNCB0ZXh0LXNtIGZvbnQtbWVkaXVtIj4KICAgICAgICAgIHtOQVYubWFwKChpdGVtKSA9PiAoCiAgICAgICAgICAgIDxMaW5rIGtleT17aXRlbS5ocmVmfSBocmVmPXtpdGVtLmhyZWZ9IGNsYXNzTmFtZT0iZm9jdXMtcmluZyBuby11bmRlcmxpbmUgaG92ZXI6dW5kZXJsaW5lIj4KICAgICAgICAgICAgICB7aXRlbS5sYWJlbH0KICAgICAgICAgICAgPC9MaW5rPgogICAgICAgICAgKSl9CiAgICAgICAgICA8Zm9ybSBhY3Rpb249e3NpZ25PdXR9PgogICAgICAgICAgICA8YnV0dG9uIHR5cGU9InN1Ym1pdCIgY2xhc3NOYW1lPSJmb2N1cy1yaW5nIHRleHQtdXJnZW50ZSI+CiAgICAgICAgICAgICAgU2FsaXIKICAgICAgICAgICAgPC9idXR0b24+CiAgICAgICAgICA8L2Zvcm0+CiAgICAgICAgPC9uYXY+CiAgICAgIDwvaGVhZGVyPgogICAgICA8bWFpbiBjbGFzc05hbWU9ImZsZXgtMSI+e2NoaWxkcmVufTwvbWFpbj4KICAgIDwvZGl2PgogICk7Cn0K
+import Link from "next/link";
+import { signOut } from "./actions";
+
+export const dynamic = "force-dynamic";
+
+const NAV = [
+  { href: "/admin", label: "Panel" },
+  { href: "/admin/articulos", label: "Notas" },
+  { href: "/admin/fuentes", label: "Fuentes" },
+  { href: "/admin/config", label: "Configuración" },
+];
+
+export default function AdminLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="mx-auto flex min-h-screen max-w-5xl flex-col px-6 py-6">
+      <header className="mb-8 flex items-center justify-between border-b-2 border-tinta pb-4">
+        <div>
+          <p className="font-mono text-xs uppercase tracking-widest text-acento2">Redacción</p>
+          <h1 className="font-serif text-2xl font-bold">La Posta Rosario</h1>
+        </div>
+        <nav className="flex items-center gap-4 text-sm font-medium">
+          {NAV.map((item) => (
+            <Link key={item.href} href={item.href} className="focus-ring no-underline hover:underline">
+              {item.label}
+            </Link>
+          ))}
+          <form action={signOut}>
+            <button type="submit" className="focus-ring text-urgente">
+              Salir
+            </button>
+          </form>
+        </nav>
+      </header>
+      <main className="flex-1">{children}</main>
+    </div>
+  );
+}
