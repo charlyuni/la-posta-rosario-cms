@@ -1,5 +1,5 @@
 // Supabase Edge Function — ingesta automática de noticias.
-// Se programa con un cron (Database → Cron Jobs) cada 15-30 minutos.
+// Se programa con un cron (ver README) cada 15-30 minutos.
 //
 // Flujo: lee fuentes activas -> descarga el feed -> descarta lo ya visto ->
 // reescribe cada nota con IA (transformativo, con atribución) -> inserta en
@@ -9,9 +9,11 @@
 // debe ser sustancialmente transformativa, nunca un resumen o traducción del
 // original, y siempre se guarda `fuente_original_url` / `fuente_nombre` para
 // que el portal muestre la atribución.
+//
+// Archivo autocontenido (sin imports relativos a _shared) para poder pegarlo
+// directo en el editor de Edge Functions del dashboard de Supabase.
 
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-import { parseFeed } from "../_shared/rss.ts";
 
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
@@ -19,6 +21,50 @@ const ANTHROPIC_API_KEY = Deno.env.get("ANTHROPIC_API_KEY")!;
 
 const supabase = createClient(SUPABASE_URL, SERVICE_ROLE_KEY);
 
+// ---------------------------------------------------------------------------
+// Parser mínimo de RSS 2.0 / Atom, suficiente para feeds de medios argentinos.
+// ---------------------------------------------------------------------------
+interface RssItem {
+  titulo: string;
+  link: string;
+  descripcion: string;
+}
+
+function extractTag(block: string, tag: string): string {
+  const cdataMatch = new RegExp(`<${tag}[^>]*><!\\[CDATA\\[([\\s\\S]*?)\\]\\]></${tag}>`, "i").exec(block);
+  if (cdataMatch) return cdataMatch[1].trim();
+
+  const plainMatch = new RegExp(`<${tag}[^>]*>([\\s\\S]*?)</${tag}>`, "i").exec(block);
+  if (!plainMatch) return "";
+
+  return plainMatch[1]
+    .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, "$1")
+    .replace(/<[^>]+>/g, "")
+    .trim();
+}
+
+function parseFeed(xml: string): RssItem[] {
+  const items: RssItem[] = [];
+  const itemBlocks = xml.match(/<item[\s\S]*?<\/item>/gi) ?? xml.match(/<entry[\s\S]*?<\/entry>/gi) ?? [];
+
+  for (const block of itemBlocks) {
+    const titulo = extractTag(block, "title");
+    let link = extractTag(block, "link");
+    if (!link) {
+      const hrefMatch = /<link[^>]*href=["']([^"']+)["']/i.exec(block);
+      link = hrefMatch?.[1] ?? "";
+    }
+    const descripcion = extractTag(block, "description") || extractTag(block, "summary") || extractTag(block, "content");
+
+    if (titulo && link) items.push({ titulo, link, descripcion });
+  }
+
+  return items;
+}
+
+// ---------------------------------------------------------------------------
+// Reescritura con IA
+// ---------------------------------------------------------------------------
 interface NotaGenerada {
   titulo: string;
   bajada: string;
@@ -81,6 +127,9 @@ Devolvé SOLO un JSON (sin markdown, sin texto alrededor) con esta forma exacta:
   return JSON.parse(cleaned);
 }
 
+// ---------------------------------------------------------------------------
+// Handler
+// ---------------------------------------------------------------------------
 Deno.serve(async () => {
   const { data: config } = await supabase.from("site_config").select("auto_publicar_ingesta").eq("id", 1).single();
   const { data: categories } = await supabase.from("categories").select("id, slug");

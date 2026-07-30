@@ -28,8 +28,7 @@ supabase/
 ### 1. Variables de entorno
 
 Copiá `.env.example` a `.env.local`. Los valores de `NEXT_PUBLIC_SUPABASE_URL` /
-`NEXT_PUBLIC_SUPABASE_ANON_KEY` ya apuntan al proyecto Supabase dedicado
-(`la-posta-rosario`, org `mvfiynmzgqaofhiwalyy`, región `sa-east-1`).
+`NEXT_PUBLIC_SUPABASE_ANON_KEY` ya apuntan al proyecto Supabase en uso.
 
 Para que la ingesta automática y la publicación en redes funcionen hace falta
 completar además (estas SÍ son secretas, nunca van a `NEXT_PUBLIC_*`):
@@ -79,12 +78,52 @@ npm run dev   # http://localhost:3000
   `site_config.auto_publicar_redes` está activo; publica en X e Instagram y
   registra el resultado en `social_posts_log`.
 
-Ambas son Supabase Edge Functions (Deno). Se despliegan con:
+Cada una es un único archivo autocontenido (sin imports relativos), pensado
+para pegarse directo en el editor de Edge Functions del dashboard de
+Supabase — no hace falta la CLI.
 
-```bash
-supabase functions deploy ingest-news
-supabase functions deploy publish-social
-```
+### Poner en marcha la ingesta automática
 
-Y se programan desde el dashboard de Supabase (Database → Cron Jobs) o con
-`pg_cron`, por ejemplo cada 20 minutos para `ingest-news`.
+1. **Cargar al menos una fuente RSS activa** en `/admin/fuentes` (ej. el feed
+   de Rosario3, Conclusión, o la fuente oficial que quieras usar).
+2. **Cargar el secreto de la IA**: Supabase dashboard → tu proyecto →
+   **Edge Functions → Manage secrets** → agregar `ANTHROPIC_API_KEY` (se
+   consigue en [console.anthropic.com](https://console.anthropic.com)).
+   `SUPABASE_URL` y `SUPABASE_SERVICE_ROLE_KEY` los inyecta Supabase
+   automáticamente en toda Edge Function, no hace falta cargarlos.
+3. **Crear la función**: Edge Functions → **Deploy a new function** →
+   nombrala `ingest-news` → pegá el contenido completo de
+   `supabase/functions/ingest-news/index.ts` → Deploy.
+4. **Programarla** (corre sola cada 20 minutos): SQL Editor → pegar y
+   ejecutar (reemplazando `TU-PROYECTO` por el ref de tu proyecto, y
+   `TU-ANON-KEY` por la clave del paso de variables de entorno):
+
+   ```sql
+   create extension if not exists pg_cron;
+   create extension if not exists pg_net;
+
+   select cron.schedule(
+     'ingest-news-cada-20-min',
+     '*/20 * * * *',
+     $$
+     select net.http_post(
+       url := 'https://TU-PROYECTO.supabase.co/functions/v1/ingest-news',
+       headers := jsonb_build_object('Authorization', 'Bearer TU-ANON-KEY')
+     );
+     $$
+   );
+   ```
+5. Las notas nuevas van a caer en `/admin/articulos` con estado **"revisión"**
+   (a menos que hayas activado `auto_publicar_ingesta` en `/admin/config`) —
+   revisalas y publicalas manualmente al principio, hasta que confíes en la
+   calidad de la reescritura.
+
+### Publicación automática en redes (opcional, requiere tus propias cuentas)
+
+Repetí los pasos 3 y 4 con la función `publish-social`, y además cargá como
+secretos `TWITTER_API_KEY/SECRET`, `TWITTER_ACCESS_TOKEN/SECRET` y/o
+`INSTAGRAM_BUSINESS_ACCOUNT_ID` + `INSTAGRAM_ACCESS_TOKEN`. Esta función no se
+programa por cron: se dispara con un **Database Webhook** (Database →
+Webhooks → Create a new hook → tabla `articles`, evento `Update`, apuntando a
+la función `publish-social`). Por último, activá
+`auto_publicar_redes` en `/admin/config`.
