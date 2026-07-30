@@ -7,7 +7,7 @@ export default async function EditarArticuloPage({ params }: { params: Promise<{
   const { id } = await params;
   const supabase = await createClient();
 
-  const [{ data: article }, { data: categories }] = await Promise.all([
+  const [{ data: article }, { data: categories, error }] = await Promise.all([
     supabase.from("articles").select("*").eq("id", id).single(),
     supabase.from("categories").select("*").order("orden"),
   ]);
@@ -19,14 +19,22 @@ export default async function EditarArticuloPage({ params }: { params: Promise<{
 
   return (
     <div>
-      <div className="mb-6 flex items-center justify-between">
-        <h2 className="font-serif text-2xl font-bold">Editar nota</h2>
+      <div className="mb-6 flex items-start justify-between">
+        <div>
+          <p className="font-mono text-xs uppercase tracking-widest text-accent2">Notas</p>
+          <h1 className="mt-0.5 font-serif text-2xl font-bold text-ink">Editar nota</h1>
+        </div>
         <form action={boundDelete}>
-          <button type="submit" className="focus-ring text-sm text-urgente">
+          <button type="submit" className="focus-ring text-sm text-danger hover:underline">
             Eliminar
           </button>
         </form>
       </div>
+      {error && (
+        <p role="alert" className="mb-4 rounded-lg border border-danger/30 bg-danger/10 p-3 text-sm text-danger">
+          No se pudieron cargar las categorías: {error.code} - {error.message}
+        </p>
+      )}
       <ArticleForm action={boundUpdate} article={article} categories={categories ?? []} submitLabel="Guardar cambios" />
     </div>
   );

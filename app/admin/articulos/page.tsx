@@ -3,9 +3,9 @@ import { createClient } from "@/lib/supabase/server";
 import type { EstadoArticulo } from "@/lib/types";
 
 const ESTADO_STYLE: Record<EstadoArticulo, string> = {
-  borrador: "bg-tinta/10 text-tinta",
-  revision: "bg-acento/15 text-acento",
-  publicado: "bg-acento2/15 text-acento2",
+  borrador: "bg-ink/10 text-muted",
+  revision: "bg-accent/15 text-accent",
+  publicado: "bg-accent2/15 text-accent2",
 };
 
 export default async function ArticulosPage() {
@@ -17,41 +17,47 @@ export default async function ArticulosPage() {
 
   return (
     <div>
-      <div className="mb-6 flex items-center justify-between">
-        <h2 className="font-serif text-2xl font-bold">Notas</h2>
+      <div className="mb-8 flex items-start justify-between">
+        <div>
+          <p className="font-mono text-xs uppercase tracking-widest text-accent2">Notas</p>
+          <h1 className="mt-0.5 font-serif text-2xl font-bold text-ink">Todo lo que se escribió</h1>
+        </div>
         <Link
           href="/admin/articulos/nuevo"
-          className="focus-ring rounded bg-tinta px-4 py-2 text-sm font-medium text-papel no-underline"
+          className="focus-ring rounded-lg bg-accent px-4 py-2 text-sm font-medium text-bg no-underline transition-opacity hover:opacity-90"
         >
           + Nueva nota
         </Link>
       </div>
 
       {error && (
-        <p role="alert" className="mb-4 rounded border border-urgente/30 bg-urgente/10 p-3 text-sm text-urgente">
+        <p role="alert" className="mb-4 rounded-lg border border-danger/30 bg-danger/10 p-3 text-sm text-danger">
           No se pudieron cargar las notas: {error.code} - {error.message}
         </p>
       )}
 
       <ul className="flex flex-col gap-2">
         {(articles ?? []).map((a) => (
-          <li key={a.id} className="flex items-center justify-between rounded border border-tinta/15 bg-white p-3">
+          <li key={a.id} className="card flex items-center justify-between p-3.5">
             <div className="flex items-center gap-3">
               <span
-                className={`rounded px-2 py-0.5 font-mono text-xs uppercase tracking-wide ${ESTADO_STYLE[a.estado as EstadoArticulo]}`}
+                className={`rounded-full px-2.5 py-0.5 font-mono text-xs uppercase tracking-wide ${ESTADO_STYLE[a.estado as EstadoArticulo]}`}
               >
                 {a.estado}
               </span>
-              <Link href={`/admin/articulos/${a.id}`} className="focus-ring font-medium no-underline hover:underline">
+              <Link
+                href={`/admin/articulos/${a.id}`}
+                className="focus-ring font-medium text-ink no-underline hover:text-accent2"
+              >
                 {a.titulo}
               </Link>
-              {a.generado_por_ia && <span className="font-mono text-xs text-tinta/50">· generada por IA</span>}
+              {a.generado_por_ia && <span className="font-mono text-xs text-muted">· generada por IA</span>}
             </div>
-            <span className="font-mono text-xs text-tinta/50">{a.autor}</span>
+            <span className="font-mono text-xs text-muted">{a.autor}</span>
           </li>
         ))}
         {(!articles || articles.length === 0) && !error && (
-          <p className="text-sm text-tinta/60">Todavía no hay notas cargadas.</p>
+          <p className="text-sm text-muted">Todavía no hay notas cargadas.</p>
         )}
       </ul>
     </div>

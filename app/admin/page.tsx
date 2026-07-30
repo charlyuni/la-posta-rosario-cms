@@ -10,7 +10,7 @@ export default async function AdminDashboard() {
     supabase.from("articles").select("*", { count: "exact", head: true }).eq("estado", "borrador"),
   ]);
 
-  const { data: pendientes } = await supabase
+  const { data: pendientes, error } = await supabase
     .from("articles")
     .select("id, titulo, generado_por_ia, creado_en")
     .eq("estado", "revision")
@@ -18,42 +18,55 @@ export default async function AdminDashboard() {
     .limit(5);
 
   const stats = [
-    { label: "Publicadas", value: publicados ?? 0 },
-    { label: "En revisión", value: enRevision ?? 0 },
-    { label: "Borradores", value: borradores ?? 0 },
+    { label: "Publicadas", value: publicados ?? 0, accent: "text-accent2" },
+    { label: "En revisión", value: enRevision ?? 0, accent: "text-accent" },
+    { label: "Borradores", value: borradores ?? 0, accent: "text-ink" },
   ];
 
   return (
     <div className="flex flex-col gap-8">
+      <div>
+        <p className="font-mono text-xs uppercase tracking-widest text-accent2">Panel</p>
+        <h1 className="mt-0.5 font-serif text-2xl font-bold text-ink">Cómo está la redacción hoy</h1>
+      </div>
+
+      {error && (
+        <p role="alert" className="rounded-lg border border-danger/30 bg-danger/10 p-3 text-sm text-danger">
+          No se pudo cargar la cola editorial: {error.code} - {error.message}
+        </p>
+      )}
+
       <div className="grid grid-cols-3 gap-4">
         {stats.map((s) => (
-          <div key={s.label} className="rounded border border-tinta/15 bg-white p-4">
-            <p className="font-mono text-xs uppercase tracking-wide text-tinta/60">{s.label}</p>
-            <p className="font-serif text-3xl font-bold">{s.value}</p>
+          <div key={s.label} className="card p-5">
+            <p className="font-mono text-xs uppercase tracking-wide text-muted">{s.label}</p>
+            <p className={`mt-1 font-serif text-4xl font-bold tabular-nums ${s.accent}`}>{s.value}</p>
           </div>
         ))}
       </div>
 
       <section>
-        <h2 className="mb-3 font-serif text-xl font-bold">Cola editorial (pendientes de revisión)</h2>
+        <h2 className="mb-3 font-serif text-xl font-bold text-ink">Cola editorial</h2>
         {pendientes && pendientes.length > 0 ? (
           <ul className="flex flex-col gap-2">
             {pendientes.map((a) => (
-              <li key={a.id} className="flex items-center justify-between rounded border border-tinta/15 bg-white p-3">
-                <span>
+              <li key={a.id} className="card flex items-center justify-between p-3.5">
+                <span className="text-sm text-ink">
                   {a.titulo}
                   {a.generado_por_ia && (
-                    <span className="ml-2 rounded bg-acento2/10 px-2 py-0.5 font-mono text-xs text-acento2">IA</span>
+                    <span className="ml-2 rounded-full bg-accent2/10 px-2 py-0.5 font-mono text-xs text-accent2">
+                      IA
+                    </span>
                   )}
                 </span>
-                <Link href={`/admin/articulos/${a.id}`} className="focus-ring text-sm">
-                  Revisar
+                <Link href={`/admin/articulos/${a.id}`} className="focus-ring text-sm font-medium">
+                  Revisar →
                 </Link>
               </li>
             ))}
           </ul>
         ) : (
-          <p className="text-sm text-tinta/60">No hay notas esperando revisión.</p>
+          !error && <p className="text-sm text-muted">No hay notas esperando revisión.</p>
         )}
       </section>
     </div>

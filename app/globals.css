@@ -3,17 +3,51 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 body {
-  @apply bg-papel text-tinta;
+  @apply bg-bg text-ink;
 }
 
 a {
-  @apply underline decoration-acento2 underline-offset-2;
+  @apply text-accent2;
+}
+
+::selection {
+  @apply bg-accent text-bg;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: theme("colors.surface2");
+  border-radius: 999px;
 }
 
 .focus-ring {
-  @apply outline-none focus-visible:ring-2 focus-visible:ring-acento2 focus-visible:ring-offset-2 focus-visible:ring-offset-papel;
+  @apply outline-none;
+}
+.focus-ring:focus-visible {
+  @apply ring-2 ring-accent2 ring-offset-2 ring-offset-bg;
+}
+
+.field {
+  @apply w-full rounded-lg border border-line bg-surface2 px-3 py-2 text-sm text-ink placeholder:text-muted/60;
+}
+
+.card {
+  @apply rounded-xl border border-line bg-surface;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

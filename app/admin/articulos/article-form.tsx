@@ -9,7 +9,7 @@ function SubmitButton({ label }: { label: string }) {
     <button
       type="submit"
       disabled={pending}
-      className="focus-ring rounded bg-tinta px-4 py-2 font-medium text-papel disabled:opacity-60"
+      className="focus-ring rounded-lg bg-accent px-5 py-2.5 font-medium text-bg transition-opacity hover:opacity-90 disabled:opacity-60"
     >
       {pending ? "Guardando…" : label}
     </button>
@@ -28,67 +28,52 @@ export default function ArticleForm({
   submitLabel: string;
 }) {
   return (
-    <form action={action} className="flex max-w-3xl flex-col gap-4">
-      <label className="flex flex-col gap-1 text-sm">
-        Título
-        <input
-          name="titulo"
-          defaultValue={article?.titulo}
-          required
-          maxLength={110}
-          className="focus-ring rounded border border-tinta/20 px-3 py-2 font-serif text-lg"
-        />
-        <span className="font-mono text-xs text-tinta/50">70–95 caracteres rinde mejor en Google Discover.</span>
-      </label>
-
-      <label className="flex flex-col gap-1 text-sm">
-        Bajada
-        <textarea
-          name="bajada"
-          defaultValue={article?.bajada ?? ""}
-          rows={2}
-          className="focus-ring rounded border border-tinta/20 px-3 py-2"
-        />
-      </label>
-
-      <label className="flex flex-col gap-1 text-sm">
-        Cuerpo (HTML)
-        <textarea
-          name="cuerpo_html"
-          defaultValue={article?.cuerpo_html ?? ""}
-          required
-          rows={14}
-          className="focus-ring rounded border border-tinta/20 px-3 py-2 font-mono text-sm"
-        />
-      </label>
-
-      <div className="grid grid-cols-2 gap-4">
-        <label className="flex flex-col gap-1 text-sm">
-          Imagen de portada (URL)
+    <form action={action} className="flex max-w-3xl flex-col gap-6">
+      <div className="card flex flex-col gap-4 p-5">
+        <label className="flex flex-col gap-1.5 text-sm">
+          <span className="font-medium text-ink">Título</span>
           <input
-            name="imagen_portada"
-            defaultValue={article?.imagen_portada ?? ""}
-            className="focus-ring rounded border border-tinta/20 px-3 py-2"
+            name="titulo"
+            defaultValue={article?.titulo}
+            required
+            maxLength={110}
+            className="field font-serif text-lg"
           />
+          <span className="font-mono text-xs text-muted">70–95 caracteres rinde mejor en Google Discover.</span>
         </label>
-        <label className="flex flex-col gap-1 text-sm">
-          Texto alternativo de la imagen
-          <input
-            name="alt_imagen"
-            defaultValue={article?.alt_imagen ?? ""}
-            className="focus-ring rounded border border-tinta/20 px-3 py-2"
+
+        <label className="flex flex-col gap-1.5 text-sm">
+          <span className="font-medium text-ink">Bajada</span>
+          <textarea name="bajada" defaultValue={article?.bajada ?? ""} rows={2} className="field" />
+        </label>
+
+        <label className="flex flex-col gap-1.5 text-sm">
+          <span className="font-medium text-ink">Cuerpo (HTML)</span>
+          <textarea
+            name="cuerpo_html"
+            defaultValue={article?.cuerpo_html ?? ""}
+            required
+            rows={14}
+            className="field font-mono text-sm"
           />
         </label>
       </div>
 
-      <div className="grid grid-cols-3 gap-4">
-        <label className="flex flex-col gap-1 text-sm">
-          Categoría
-          <select
-            name="categoria_id"
-            defaultValue={article?.categoria_id ?? ""}
-            className="focus-ring rounded border border-tinta/20 px-3 py-2"
-          >
+      <div className="card grid grid-cols-2 gap-4 p-5">
+        <label className="flex flex-col gap-1.5 text-sm">
+          <span className="font-medium text-ink">Imagen de portada (URL)</span>
+          <input name="imagen_portada" defaultValue={article?.imagen_portada ?? ""} className="field" />
+        </label>
+        <label className="flex flex-col gap-1.5 text-sm">
+          <span className="font-medium text-ink">Texto alternativo de la imagen</span>
+          <input name="alt_imagen" defaultValue={article?.alt_imagen ?? ""} className="field" />
+        </label>
+      </div>
+
+      <div className="card grid grid-cols-3 gap-4 p-5">
+        <label className="flex flex-col gap-1.5 text-sm">
+          <span className="font-medium text-ink">Categoría</span>
+          <select name="categoria_id" defaultValue={article?.categoria_id ?? ""} className="field">
             <option value="">—</option>
             {categories.map((c) => (
               <option key={c.id} value={c.id}>
@@ -97,48 +82,34 @@ export default function ArticleForm({
             ))}
           </select>
         </label>
-        <label className="flex flex-col gap-1 text-sm">
-          Barrio
-          <input
-            name="barrio"
-            defaultValue={article?.barrio ?? ""}
-            placeholder="Pichincha, Abasto…"
-            className="focus-ring rounded border border-tinta/20 px-3 py-2"
-          />
+        <label className="flex flex-col gap-1.5 text-sm">
+          <span className="font-medium text-ink">Barrio</span>
+          <input name="barrio" defaultValue={article?.barrio ?? ""} placeholder="Pichincha, Abasto…" className="field" />
         </label>
-        <label className="flex flex-col gap-1 text-sm">
-          Autor
-          <input
-            name="autor"
-            defaultValue={article?.autor ?? "Redacción"}
-            className="focus-ring rounded border border-tinta/20 px-3 py-2"
-          />
+        <label className="flex flex-col gap-1.5 text-sm">
+          <span className="font-medium text-ink">Autor</span>
+          <input name="autor" defaultValue={article?.autor ?? "Redacción"} className="field" />
         </label>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
-        <label className="flex flex-col gap-1 text-sm">
-          Meta título (SEO)
-          <input
-            name="meta_title"
-            defaultValue={article?.meta_title ?? ""}
-            maxLength={95}
-            className="focus-ring rounded border border-tinta/20 px-3 py-2"
-          />
+      <div className="card grid grid-cols-2 gap-4 p-5">
+        <label className="flex flex-col gap-1.5 text-sm">
+          <span className="font-medium text-ink">Meta título (SEO)</span>
+          <input name="meta_title" defaultValue={article?.meta_title ?? ""} maxLength={95} className="field" />
         </label>
-        <label className="flex flex-col gap-1 text-sm">
-          Meta descripción (SEO)
+        <label className="flex flex-col gap-1.5 text-sm">
+          <span className="font-medium text-ink">Meta descripción (SEO)</span>
           <input
             name="meta_description"
             defaultValue={article?.meta_description ?? ""}
             maxLength={160}
-            className="focus-ring rounded border border-tinta/20 px-3 py-2"
+            className="field"
           />
         </label>
       </div>
 
       {article?.fuente_nombre && (
-        <p className="rounded border border-acento2/30 bg-acento2/5 p-3 font-mono text-xs">
+        <p className="rounded-lg border border-accent2/30 bg-accent2/5 p-3 font-mono text-xs text-ink">
           Generado a partir de: {article.fuente_nombre}
           {article.fuente_original_url && (
             <>
@@ -151,13 +122,9 @@ export default function ArticleForm({
         </p>
       )}
 
-      <label className="flex flex-col gap-1 text-sm">
-        Estado
-        <select
-          name="estado"
-          defaultValue={article?.estado ?? "borrador"}
-          className="focus-ring w-48 rounded border border-tinta/20 px-3 py-2"
-        >
+      <label className="flex flex-col gap-1.5 text-sm">
+        <span className="font-medium text-ink">Estado</span>
+        <select name="estado" defaultValue={article?.estado ?? "borrador"} className="field w-48">
           <option value="borrador">Borrador</option>
           <option value="revision">En revisión</option>
           <option value="publicado">Publicado</option>

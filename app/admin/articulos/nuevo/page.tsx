@@ -8,9 +8,10 @@ export default async function NuevoArticuloPage() {
 
   return (
     <div>
-      <h2 className="mb-6 font-serif text-2xl font-bold">Nueva nota</h2>
+      <p className="font-mono text-xs uppercase tracking-widest text-accent2">Notas</p>
+      <h1 className="mb-6 mt-0.5 font-serif text-2xl font-bold text-ink">Nueva nota</h1>
       {error && (
-        <p role="alert" className="mb-4 rounded border border-urgente/30 bg-urgente/10 p-3 text-sm text-urgente">
+        <p role="alert" className="mb-4 rounded-lg border border-danger/30 bg-danger/10 p-3 text-sm text-danger">
           No se pudieron cargar las categorías: {error.code} - {error.message}
         </p>
       )}
