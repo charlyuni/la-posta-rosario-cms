@@ -1,1 +1,59 @@
-aW1wb3J0IExpbmsgZnJvbSAibmV4dC9saW5rIjsKaW1wb3J0IHsgY3JlYXRlQ2xpZW50IH0gZnJvbSAiQC9saWIvc3VwYWJhc2Uvc2VydmVyIjsKaW1wb3J0IHR5cGUgeyBFc3RhZG9BcnRpY3VsbyB9IGZyb20gIkAvbGliL3R5cGVzIjsKCmNvbnN0IEVTVEFET19TVFlMRTogUmVjb3JkPEVzdGFkb0FydGljdWxvLCBzdHJpbmc+ID0gewogIGJvcnJhZG9yOiAiYmctdGludGEvMTAgdGV4dC10aW50YSIsCiAgcmV2aXNpb246ICJiZy1hY2VudG8vMTUgdGV4dC1hY2VudG8iLAogIHB1YmxpY2FkbzogImJnLWFjZW50bzIvMTUgdGV4dC1hY2VudG8yIiwKfTsKCmV4cG9ydCBkZWZhdWx0IGFzeW5jIGZ1bmN0aW9uIEFydGljdWxvc1BhZ2UoKSB7CiAgY29uc3Qgc3VwYWJhc2UgPSBhd2FpdCBjcmVhdGVDbGllbnQoKTsKICBjb25zdCB7IGRhdGE6IGFydGljbGVzLCBlcnJvciB9ID0gYXdhaXQgc3VwYWJhc2UKICAgIC5mcm9tKCJhcnRpY2xlcyIpCiAgICAuc2VsZWN0KCJpZCwgdGl0dWxvLCBlc3RhZG8sIGdlbmVyYWRvX3Bvcl9pYSwgYXV0b3IsIGFjdHVhbGl6YWRvX2VuIikKICAgIC5vcmRlcigiYWN0dWFsaXphZG9fZW4iLCB7IGFzY2VuZGluZzogZmFsc2UgfSk7CgogIHJldHVybiAoCiAgICA8ZGl2PgogICAgICA8ZGl2IGNsYXNzTmFtZT0ibWItNiBmbGV4IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWJldHdlZW4iPgogICAgICAgIDxoMiBjbGFzc05hbWU9ImZvbnQtc2VyaWYgdGV4dC0yeGwgZm9udC1ib2xkIj5Ob3RhczwvaDI+CiAgICAgICAgPExpbmsKICAgICAgICAgIGhyZWY9Ii9hZG1pbi9hcnRpY3Vsb3MvbnVldm8iCiAgICAgICAgICBjbGFzc05hbWU9ImZvY3VzLXJpbmcgcm91bmRlZCBiZy10aW50YSBweC00IHB5LTIgdGV4dC1zbSBmb250LW1lZGl1bSB0ZXh0LXBhcGVsIG5vLXVuZGVybGluZSIKICAgICAgICA+CiAgICAgICAgICArIE51ZXZhIG5vdGEKICAgICAgICA8L0xpbms+CiAgICAgIDwvZGl2PgoKICAgICAge2Vycm9yICYmICgKICAgICAgICA8cCByb2xlPSJhbGVydCIgY2xhc3NOYW1lPSJtYi00IHJvdW5kZWQgYm9yZGVyIGJvcmRlci11cmdlbnRlLzMwIGJnLXVyZ2VudGUvMTAgcC0zIHRleHQtc20gdGV4dC11cmdlbnRlIj4KICAgICAgICAgIE5vIHNlIHB1ZGllcm9uIGNhcmdhciBsYXMgbm90YXM6IHtlcnJvci5jb2RlfSAtIHtlcnJvci5tZXNzYWdlfQogICAgICAgIDwvcD4KICAgICAgKX0KCiAgICAgIDx1bCBjbGFzc05hbWU9ImZsZXggZmxleC1jb2wgZ2FwLTIiPgogICAgICAgIHsoYXJ0aWNsZXMgPz8gW10pLm1hcCgoYSkgPT4gKAogICAgICAgICAgPGxpIGtleT17YS5pZH0gY2xhc3NOYW1lPSJmbGV4IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWJldHdlZW4gcm91bmRlZCBib3JkZXIgYm9yZGVyLXRpbnRhLzE1IGJnLXdoaXRlIHAtMyI+CiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGl0ZW1zLWNlbnRlciBnYXAtMyI+CiAgICAgICAgICAgICAgPHNwYW4KICAgICAgICAgICAgICAgIGNsYXNzTmFtZT17YHJvdW5kZWQgcHgtMiBweS0wLjUgZm9udC1tb25vIHRleHQteHMgdXBwZXJjYXNlIHRyYWNraW5nLXdpZGUgJHtFU1RBRE9fU1RZTEVbYS5lc3RhZG8gYXMgRXN0YWRvQXJ0aWN1bG9dfWB9CiAgICAgICAgICAgICAgPgogICAgICAgICAgICAgICAge2EuZXN0YWRvfQogICAgICAgICAgICAgIDwvc3Bhbj4KICAgICAgICAgICAgICA8TGluayBocmVmPXtgL2FkbWluL2FydGljdWxvcy8ke2EuaWR9YH0gY2xhc3NOYW1lPSJmb2N1cy1yaW5nIGZvbnQtbWVkaXVtIG5vLXVuZGVybGluZSBob3Zlcjp1bmRlcmxpbmUiPgogICAgICAgICAgICAgICAge2EudGl0dWxvfQogICAgICAgICAgICAgIDwvTGluaz4KICAgICAgICAgICAgICB7YS5nZW5lcmFkb19wb3JfaWEgJiYgPHNwYW4gY2xhc3NOYW1lPSJmb250LW1vbm8gdGV4dC14cyB0ZXh0LXRpbnRhLzUwIj7CtyBnZW5lcmFkYSBwb3IgSUE8L3NwYW4+fQogICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgPHNwYW4gY2xhc3NOYW1lPSJmb250LW1vbm8gdGV4dC14cyB0ZXh0LXRpbnRhLzUwIj57YS5hdXRvcn08L3NwYW4+CiAgICAgICAgICA8L2xpPgogICAgICAgICkpfQogICAgICAgIHsoIWFydGljbGVzIHx8IGFydGljbGVzLmxlbmd0aCA9PT0gMCkgJiYgIWVycm9yICYmICgKICAgICAgICAgIDxwIGNsYXNzTmFtZT0idGV4dC1zbSB0ZXh0LXRpbnRhLzYwIj5Ub2Rhdsedh8OtYSBubyBoYXkgbm90YXMgY2FyZ2FkYXMuPC9wPgogICAgICAgICl9CiAgICAgIDwvdWw+CiAgICA8L2Rpdj4KICApOwp9Cg==
+import Link from "next/link";
+import { createClient } from "@/lib/supabase/server";
+import type { EstadoArticulo } from "@/lib/types";
+
+const ESTADO_STYLE: Record<EstadoArticulo, string> = {
+  borrador: "bg-tinta/10 text-tinta",
+  revision: "bg-acento/15 text-acento",
+  publicado: "bg-acento2/15 text-acento2",
+};
+
+export default async function ArticulosPage() {
+  const supabase = await createClient();
+  const { data: articles, error } = await supabase
+    .from("articles")
+    .select("id, titulo, estado, generado_por_ia, autor, actualizado_en")
+    .order("actualizado_en", { ascending: false });
+
+  return (
+    <div>
+      <div className="mb-6 flex items-center justify-between">
+        <h2 className="font-serif text-2xl font-bold">Notas</h2>
+        <Link
+          href="/admin/articulos/nuevo"
+          className="focus-ring rounded bg-tinta px-4 py-2 text-sm font-medium text-papel no-underline"
+        >
+          + Nueva nota
+        </Link>
+      </div>
+
+      {error && (
+        <p role="alert" className="mb-4 rounded border border-urgente/30 bg-urgente/10 p-3 text-sm text-urgente">
+          No se pudieron cargar las notas: {error.code} - {error.message}
+        </p>
+      )}
+
+      <ul className="flex flex-col gap-2">
+        {(articles ?? []).map((a) => (
+          <li key={a.id} className="flex items-center justify-between rounded border border-tinta/15 bg-white p-3">
+            <div className="flex items-center gap-3">
+              <span
+                className={`rounded px-2 py-0.5 font-mono text-xs uppercase tracking-wide ${ESTADO_STYLE[a.estado as EstadoArticulo]}`}
+              >
+                {a.estado}
+              </span>
+              <Link href={`/admin/articulos/${a.id}`} className="focus-ring font-medium no-underline hover:underline">
+                {a.titulo}
+              </Link>
+              {a.generado_por_ia && <span className="font-mono text-xs text-tinta/50">· generada por IA</span>}
+            </div>
+            <span className="font-mono text-xs text-tinta/50">{a.autor}</span>
+          </li>
+        ))}
+        {(!articles || articles.length === 0) && !error && (
+          <p className="text-sm text-tinta/60">Todavía no hay notas cargadas.</p>
+        )}
+      </ul>
+    </div>
+  );
+}
