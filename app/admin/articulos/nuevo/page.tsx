@@ -1,15 +1,1 @@
-import { createClient } from "@/lib/supabase/server";
-import ArticleForm from "../article-form";
-import { createArticle } from "../actions";
-
-export default async function NuevoArticuloPage() {
-  const supabase = await createClient();
-  const { data: categories } = await supabase.from("categories").select("*").order("orden");
-
-  return (
-    <div>
-      <h2 className="mb-6 font-serif text-2xl font-bold">Nueva nota</h2>
-      <ArticleForm action={createArticle} categories={categories ?? []} submitLabel="Crear nota" />
-    </div>
-  );
-}
+aW1wb3J0IHsgY3JlYXRlQ2xpZW50IH0gZnJvbSAiQC9saWIvc3VwYWJhc2Uvc2VydmVyIjsKaW1wb3J0IEFydGljbGVGb3JtIGZyb20gIi4uL2FydGljbGUtZm9ybSI7CmltcG9ydCB7IGNyZWF0ZUFydGljbGUgfSBmcm9tICIuLi9hY3Rpb25zIjsKCmV4cG9ydCBkZWZhdWx0IGFzeW5jIGZ1bmN0aW9uIE51ZXZvQXJ0aWN1bG9QYWdlKCkgewogIGNvbnN0IHN1cGFiYXNlID0gYXdhaXQgY3JlYXRlQ2xpZW50KCk7CiAgY29uc3QgeyBkYXRhOiBjYXRlZ29yaWVzLCBlcnJvciB9ID0gYXdhaXQgc3VwYWJhc2UuZnJvbSgiY2F0ZWdvcmllcyIpLnNlbGVjdCgiKiIpLm9yZGVyKCJvcmRlbiIpOwoKICByZXR1cm4gKAogICAgPGRpdj4KICAgICAgPGgyIGNsYXNzTmFtZT0ibWItNiBmb250LXNlcmlmIHRleHQtMnhsIGZvbnQtYm9sZCI+TnVldmEgbm90YTwvaDI+CiAgICAgIHtlcnJvciAmJiAoCiAgICAgICAgPHAgcm9sZT0iYWxlcnQiIGNsYXNzTmFtZT0ibWItNCByb3VuZGVkIGJvcmRlciBib3JkZXItdXJnZW50ZS8zMCBiZy11cmdlbnRlLzEwIHAtMyB0ZXh0LXNtIHRleHQtdXJnZW50ZSI+CiAgICAgICAgICBObyBzZSBwdWRpZXJvbiBjYXJnYXIgbGFzIGNhdGVnb3LDrWFzOiB7ZXJyb3IuY29kZX0gLSB7ZXJyb3IubWVzc2FnZX0KICAgICAgICA8L3A+CiAgICAgICl9CiAgICAgIDxBcnRpY2xlRm9ybSBhY3Rpb249e2NyZWF0ZUFydGljbGV9IGNhdGVnb3JpZXM9e2NhdGVnb3JpZXMgPz8gW119IHN1Ym1pdExhYmVsPSJDcmVhciBub3RhIiAvPgogICAgPC9kaXY+CiAgKTsKfQo=
