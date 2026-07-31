@@ -2,6 +2,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { signOut } from "./actions";
 import { IconGrid, IconFile, IconRss, IconGear, IconLogout, IconExternal } from "@/components/icons";
+import SiteName from "@/components/site-name";
 
 export const dynamic = "force-dynamic";
 
@@ -27,7 +28,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       <aside className="flex w-60 shrink-0 flex-col border-r border-line bg-surface">
         <div className="px-5 py-6">
           <p className="font-mono text-[0.65rem] uppercase tracking-widest text-accent2">Redacción</p>
-          <h1 className="mt-0.5 font-serif text-lg font-bold leading-tight text-ink">{nombrePortal}</h1>
+          <h1 className="mt-0.5 font-serif text-lg font-bold leading-tight text-ink">
+            <SiteName nombre={nombrePortal} />
+          </h1>
         </div>
 
         <nav className="flex flex-1 flex-col gap-0.5 px-3">
